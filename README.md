@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Emergency Ambulance Dispatch — Frontend
 
-## Getting Started
+Next.js App Router frontend for the Emergency Ambulance Dispatch System. Connects to the real backend API only (no mock workflow data).
 
-First, run the development server:
+## Tech stack
+
+- Next.js App Router + TypeScript
+- Tailwind CSS + shadcn-style UI components
+- TanStack Query (client cache/mutations)
+- Zustand (UI state — mobile sidebar)
+- React Hook Form + Zod
+- Axios API client (browser proxy + server modules)
+- Leaflet / React Leaflet (maps)
+- Recharts (analytics)
+- Sonner (toasts)
+- JWT middleware route protection
+
+## Setup
 
 ```bash
+npm install
+cp .env.example .env.local   # or create .env.local manually
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api/v1
+JWT_ACCESS_SECRET=<same as backend JWT_ACCESS_SECRET>
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
 
-## Learn More
+Ensure the backend is running on port 5000 with CORS allowing the frontend origin.
 
-To learn more about Next.js, take a look at the following resources:
+## Verified demo credentials
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Password for all accounts: `Password123!`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Role | Email |
+|------|-------|
+| ADMIN | admin@dispatch.com |
+| DISPATCHER | dispatcher1@dispatch.com |
+| PATIENT | patient1@dispatch.com |
 
-## Deploy on Vercel
+Use the three **Quick Demo Login** buttons on `/login` for one-click evaluator access.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Route | Description |
+|-------|-------------|
+| `/login` | Login + demo buttons |
+| `/register` | Patient registration |
+| `/dashboard` | Role-based dashboard |
+| `/emergencies` | Emergency list / dispatcher queue |
+| `/emergencies/create` | Create emergency (patient) |
+| `/emergencies/[id]` | Emergency details + timeline + map |
+| `/ambulances` | Ambulance fleet |
+| `/dispatches` | Dispatch monitoring |
+| `/hospitals` | Hospital directory |
+| `/trips` | Trip records |
+| `/payments` | Payment history / pay now |
+| `/payments/success` | Stripe success return |
+| `/payments/cancel` | Stripe cancel return |
+| `/notifications` | Notification history |
+| `/analytics` | Admin analytics + user management |
+| `/profile` | Profile view/edit |
+
+## Scripts
+
+```bash
+npm run dev      # development
+npm run build    # production build
+npm run start    # production server
+npm run lint     # ESLint
+```
+
+## Deployment (Vercel)
+
+1. Push to GitHub
+2. Import project in Vercel
+3. Set environment variables (`NEXT_PUBLIC_API_BASE_URL`, `JWT_ACCESS_SECRET`, `NEXT_PUBLIC_APP_URL`)
+4. Deploy and verify login, role routes, and Stripe test checkout
