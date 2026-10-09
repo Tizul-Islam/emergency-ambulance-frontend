@@ -36,7 +36,7 @@ export function RequestWizard() {
         <form noValidate className="space-y-3" onSubmit={handleSubmit((vals) => start(async () => {
           const r = await createRequestAction(vals);
           if (r.error || !r.id) return void toast.error(r.error ?? "Could not send the request");
-          reset(); toast.success("Ambulance requested"); router.replace(`/dashboard/requests/${r.id}`);
+          reset(); toast.success("Ambulance requested"); router.replace(`/emergencies/${r.id}`);
         }))}>
           <div hidden={step !== 0} className="space-y-3">
             <div><label htmlFor="description" className="mb-1 block text-sm font-semibold">What is the emergency?</label><Input id="description" {...register("description")} />{err("description")}</div>
