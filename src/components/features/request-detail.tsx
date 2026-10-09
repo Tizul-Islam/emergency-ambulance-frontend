@@ -22,11 +22,33 @@ export function RequestDetail({ request: r, role }: { request: EmergencyRequest;
       </Card>
       {d && <Card><h3 className="font-bold">Ambulance</h3><p className="text-sm">{d.ambulance.registrationNumber} ({d.ambulance.type.toLowerCase()}){d.driver ? `, driver ${d.driver.name}, ${d.driver.phone}` : ""}</p></Card>}
       <div className="flex flex-wrap items-center gap-3">
-        {role === "PATIENT" && ["REQUESTED", "PRIORITY_ASSIGNED"].includes(r.status) && <ActionButton variant="destructive" action={cancelRequestAction.bind(null, r.id)} success="Request cancelled">Cancel request</ActionButton>}
-        {role === "PATIENT" && r.status === "COMPLETED" && trip?.fare != null && <ActionButton size="default" action={payAction.bind(null, trip.id)}>{`Pay BDT ${trip.fare} with card`}</ActionButton>}
-        {role !== "PATIENT" && !d && ["REQUESTED", "PRIORITY_ASSIGNED"].includes(r.status) && <ActionButton action={assignAction.bind(null, r.id)} success="Ambulance assigned">Assign ambulance</ActionButton>}
-        {role !== "PATIENT" && d && active && <StatusControl dispatchId={d.id} current={r.status} />}
+        {role === "PATIENT" && ["REQUESTED", "PRIORITY_ASSIGNED"].includes(r.status) && (
+          <ActionButton variant="destructive" action={cancelRequestAction.bind(null, r.id)} success="Request cancelled">Cancel request</ActionButton>
+        )}
+        {role === "PATIENT" && r.status === "COMPLETED" && trip?.fare != null && trip.payment?.status !== "SUCCESS" && (
+          <ActionButton size="default" action={payAction.bind(null, trip.id)}>{`Pay BDT ${trip.fare} Securely`}</ActionButton>
+        )}
+        {role !== "PATIENT" && !d && ["REQUESTED", "PRIORITY_ASSIGNED"].includes(r.status) && (
+          <ActionButton action={assignAction.bind(null, r.id)} success="Ambulance assigned">Assign ambulance</ActionButton>
+        )}
+        {role !== "PATIENT" && d && active && (
+          <StatusControl dispatchId={d.id} current={r.status} />
+        )}
       </div>
+      {/* Show payment status or message for patient if already paid or no fare */}
+      {role === "PATIENT" && r.status === "COMPLETED" && (
+        <div className="mt-4 text-sm">
+          {trip?.fare != null ? (
+            trip.payment?.status === "SUCCESS" ? (
+              <p className="text-green-600 font-semibold">Payment successful: BDT {trip.fare} via {trip.payment.provider || 'Stripe'}</p>
+            ) : (
+              <p className="text-amber-600">Payment pending: BDT {trip.fare}. Click the button above to pay.</p>
+            )
+          ) : (
+            <p className="text-gray-500">No fare information available.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
