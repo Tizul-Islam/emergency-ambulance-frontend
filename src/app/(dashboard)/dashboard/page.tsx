@@ -35,7 +35,7 @@ export default async function DashboardPage() {
 
     return (
       <div className="space-y-4">
-        <AutoRefresh every={15000} />
+        <AutoRefresh every={30000} />
         <h2 className="text-2xl font-extrabold text-slate-900">Command Center</h2>
         {stats && (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -118,7 +118,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-4">
-      <AutoRefresh every={15000} />
+      <AutoRefresh every={30000} />
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-2xl font-extrabold text-slate-900">
           Patient Dashboard
