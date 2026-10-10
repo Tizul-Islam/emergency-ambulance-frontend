@@ -88,20 +88,45 @@ export function LoginForm() {
         <span className="h-px flex-1 bg-slate-200" />
       </div>
 
-      <div className="space-y-2 text-center">
+      <div className="space-y-3 text-center mt-2">
         <p className="text-sm font-semibold">🚀 Quick Demo Login</p>
-        {DEMO_ORDER.map((role) => (
+        
+        <div className="grid grid-cols-2 gap-3">
           <Button
-            key={role}
             type="button"
             variant="outline"
-            className="w-full"
+            className="w-full flex-col h-auto py-2"
             disabled={busy !== null || pending}
-            onClick={() => demo(role)}
+            onClick={() => demo("ADMIN")}
           >
-            {busy === role ? "Logging in..." : DEMO_CREDENTIALS[role].label}
+            <span className="text-base mb-1">👨‍💼 Admin</span>
+            <span className="text-xs text-slate-500">{busy === "ADMIN" ? "Logging in..." : "Demo Login"}</span>
           </Button>
-        ))}
+          
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full flex-col h-auto py-2"
+            disabled={busy !== null || pending}
+            onClick={() => demo("PATIENT")}
+          >
+            <span className="text-base mb-1">👤 User</span>
+            <span className="text-xs text-slate-500">{busy === "PATIENT" ? "Logging in..." : "Demo Login"}</span>
+          </Button>
+        </div>
+        
+        <div className="flex justify-center mt-3">
+          <Button
+            type="button"
+            variant="outline"
+            className="w-[calc(50%-0.375rem)] flex-col h-auto py-2"
+            disabled={busy !== null || pending}
+            onClick={() => demo("DISPATCHER")}
+          >
+            <span className="text-base mb-1">🛠️ Provider</span>
+            <span className="text-xs text-slate-500">{busy === "DISPATCHER" ? "Logging in..." : "Demo Login"}</span>
+          </Button>
+        </div>
       </div>
     </div>
   );
