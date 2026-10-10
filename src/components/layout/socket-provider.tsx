@@ -45,11 +45,13 @@ export function SocketProvider({ children, token }: { children: React.ReactNode;
       });
     });
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSocket(s);
 
     return () => {
       s.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   return (

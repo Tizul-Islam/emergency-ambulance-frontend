@@ -20,6 +20,7 @@ export function useSocket(token?: string) {
       console.log("Socket connected");
     });
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSocket(s);
 
     return () => {

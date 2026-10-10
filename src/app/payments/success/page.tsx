@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { api, ApiError } from "@/lib/api";
+import { api } from "@/lib/api";
 import { LinkButton } from "@/components/ui/button";
 
 export const metadata: Metadata = { title: "Payment Success" };
@@ -11,7 +11,7 @@ export default async function PaymentSuccessPage({
 }) {
   const { session_id } = await searchParams;
   let ok = false;
-  let msg = "We could not confirm this payment.";
+  const msg = "We could not confirm this payment.";
 
   if (session_id) {
     try {
